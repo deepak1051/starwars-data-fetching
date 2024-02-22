@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import LoadingSpinner from './LoadingSpinner';
 
 const Resident = ({ planet }) => {
   const [residentList, setResidentList] = useState([]);
@@ -22,7 +23,7 @@ const Resident = ({ planet }) => {
       });
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
 
   if (residentList.length === 0)
     return <p>This planet has no residents yet...</p>;

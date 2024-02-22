@@ -24,11 +24,11 @@ const PlanetCard = ({ planet }) => {
         <div className="flex justify-between">
           <p className="text-lg font-bold">Residents List</p>
           <button onClick={() => setShow((p) => !p)} className="underline">
-            {show ? 'show list' : 'hide list'}
+            {show ? 'hide list' : 'show list'}
           </button>
         </div>
 
-        {show
+        {/* {show
           ? residentList.map((r) => (
               <div
                 key={r.name}
@@ -40,10 +40,34 @@ const PlanetCard = ({ planet }) => {
                 <p>Gender: {r.gender}</p>
               </div>
             ))
-          : null}
+          : null} */}
+
+        {show ? (
+          <table className="table-auto border-collapse">
+            <thead>
+              <tr className="">
+                <th className=" text-left">Name</th>
+                <th className=" text-left">Height</th>
+                <th className=" text-left">Mass</th>
+                <th className=" text-left">Gender</th>
+              </tr>
+            </thead>
+            <tbody>
+              {residentList.map((r) => (
+                <tr key={r.name}>
+                  <td>{r.name}</td>
+                  <td>{r.height}</td>
+                  <td>{r.mass}</td>
+                  <td>{r.gender}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : null}
       </div>
     </div>
   );
 };
 
 export default PlanetCard;
+//className="p-1 rounded bg-slate-300 mb-4 border"

@@ -1,25 +1,9 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+
+import Resident from './Resident';
 
 const PlanetCard = ({ planet }) => {
-  const [residentList, setResidentList] = useState([]);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState('false');
-
-  useEffect(() => {
-    setLoading(true);
-    Promise.all(
-      planet.residents.map((r) => axios.get(r).then((res) => res.data))
-    )
-      .then((result) => {
-        setResidentList(result);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <div className="bg-white border rounded-md flex flex-col  p-2 flex-1 shadow-md ">
@@ -43,34 +27,7 @@ const PlanetCard = ({ planet }) => {
           </button>
         </div>
 
-        {show ? (
-          loading ? (
-            <p>Loading...</p>
-          ) : residentList.length > 0 ? (
-            <table className="table-auto border-collapse">
-              <thead>
-                <tr className="">
-                  <th className=" text-left">Name</th>
-                  <th className=" text-left">Height</th>
-                  <th className=" text-left">Mass</th>
-                  <th className=" text-left">Gender</th>
-                </tr>
-              </thead>
-              <tbody>
-                {residentList.map((r) => (
-                  <tr key={r.name}>
-                    <td>{r.name}</td>
-                    <td>{r.height}</td>
-                    <td>{r.mass}</td>
-                    <td>{r.gender}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>This planet has no residents...</p>
-          )
-        ) : null}
+        {show ? <Resident planet={planet} /> : null}
       </div>
     </div>
   );

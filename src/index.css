@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: whitesmoke;
+}
+
+.loading {
+  animation: 0.6s loadingflashing ease-in-out alternate infinite;
+}
+
+@keyframes loadingflashing {
+  0% {
+    opacity: 0.1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}

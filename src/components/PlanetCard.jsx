@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const PlanetCard = ({ planet }) => {
   const [residentList, setResidentList] = useState([]);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     Promise.all(

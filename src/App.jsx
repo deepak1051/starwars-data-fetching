@@ -40,6 +40,10 @@ function App() {
   if (isLoading) return <Loading />;
   return (
     <div className="container mx-auto p-4 max-w-2xl ">
+      <h1 className="text-center font-extrabold text-2xl uppercase italic m-2 text-teal-600">
+        Star Wars Planets{' '}
+      </h1>
+
       <div className="flex flex-col  gap-4">
         {plantes.results?.map((planet) => (
           <PlanetCard planet={planet} key={planet.name} />

@@ -4,11 +4,21 @@ import axios from 'axios';
 const PlanetCard = ({ planet }) => {
   const [residentList, setResidentList] = useState([]);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState('false');
 
   useEffect(() => {
+    setLoading(true);
     Promise.all(
       planet.residents.map((r) => axios.get(r).then((res) => res.data))
-    ).then((result) => setResidentList(result));
+    )
+      .then((result) => {
+        setResidentList(result);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -33,47 +43,33 @@ const PlanetCard = ({ planet }) => {
           </button>
         </div>
 
-        {/* {show
-          ? residentList.map((r) => (
-              <div
-                key={r.name}
-                className="flex border items-center justify-between p-1 rounded bg-slate-300"
-              >
-                <h3 className="border-e-2">Name: {r.name}</h3>
-                <p className="border-e-2">Height: {r.height}</p>
-                <p className="border-e-2">Mass: {r.mass}</p>
-                <p>Gender: {r.gender}</p>
-              </div>
-            ))
-          : null} */}
-
         {show ? (
-          residentList ? (
-            length > 0 ? (
-              <table className="table-auto border-collapse">
-                <thead>
-                  <tr className="">
-                    <th className=" text-left">Name</th>
-                    <th className=" text-left">Height</th>
-                    <th className=" text-left">Mass</th>
-                    <th className=" text-left">Gender</th>
+          loading ? (
+            <p>Loading...</p>
+          ) : residentList.length > 0 ? (
+            <table className="table-auto border-collapse">
+              <thead>
+                <tr className="">
+                  <th className=" text-left">Name</th>
+                  <th className=" text-left">Height</th>
+                  <th className=" text-left">Mass</th>
+                  <th className=" text-left">Gender</th>
+                </tr>
+              </thead>
+              <tbody>
+                {residentList.map((r) => (
+                  <tr key={r.name}>
+                    <td>{r.name}</td>
+                    <td>{r.height}</td>
+                    <td>{r.mass}</td>
+                    <td>{r.gender}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {residentList.map((r) => (
-                    <tr key={r.name}>
-                      <td>{r.name}</td>
-                      <td>{r.height}</td>
-                      <td>{r.mass}</td>
-                      <td>{r.gender}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>This planet has no residents...</p>
-            )
-          ) : null
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>This planet has no residents...</p>
+          )
         ) : null}
       </div>
     </div>

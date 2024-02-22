@@ -24,6 +24,9 @@ const Resident = ({ planet }) => {
 
   if (loading) return <p>Loading...</p>;
 
+  if (residentList.length === 0)
+    return <p>This planet has no residents yet...</p>;
+
   return (
     <table className="table-auto border-collapse">
       <thead>
